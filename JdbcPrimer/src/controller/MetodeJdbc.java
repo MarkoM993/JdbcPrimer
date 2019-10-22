@@ -1,8 +1,11 @@
 package controller;
 
 import java.sql.Connection;
+
+import model.Kurs;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -90,4 +93,54 @@ public class MetodeJdbc {
 		}
 	}
 	
+	
+
+
+
+ public Kurs vratiKursPoId(int id) {
+	
+	Connection konekcija = null;
+	PreparedStatement pst = null;
+	ResultSet res = null;
+	
+	Kurs kurs = new Kurs ();
+	
+	try {
+		konekcija = uspostaviKonekciju("kursevi");
+		System.out.println("Konekcija uspostavljena");
+		
+		String query = "SELECT * FROM courses WHERE id_courses = ?";
+		pst = konekcija.prepareStatement(query);
+		pst.setInt(1, id);
+		
+		res = pst.executeQuery();
+		
+		
+		while(res.next()) {
+			
+			int idKursa = res.getInt("id_courses");
+			kurs.setIdKursa(idKursa);
+			//kurs.setIdKursa(res.getInt("id_courses")); bolja opcija
+			kurs.setImeKursa(res.getString("ime_kursa"));
+            kurs.setCena(res.getDouble("cena"));			
+			
+		}
+		
+		return kurs;
+	
+		
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		
+		e.printStackTrace();
+		return null;
+	} finally {
+		try {
+			res.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	    
+}
 }

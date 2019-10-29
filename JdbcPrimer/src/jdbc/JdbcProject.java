@@ -3,6 +3,7 @@ package jdbc;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,37 +16,34 @@ public class JdbcProject {
 	public static void main(String[] args) {
 
 		MetodeJdbc metode = new MetodeJdbc();
-		/*Scanner scanner = new Scanner(System.in);
-		System.out.println("Unesite id usera:");
-		int id = Integer.parseInt(scanner.nextLine());*/
-		/*Kurs k = metode.vratiKursPoId(3);
 		
-		System.out.println("id: " + k.getIdKursa());
-		System.out.println("ime: " + k.getImeKursa());
-		System.out.println("cena: " + k.getCena());*/
-
-		/*User user = metode.vratiUseraPoId(id);
+		Scanner scanner = new Scanner(System.in);
 		
-		if(user.getIdUser() != 0) {
-			System.out.println("ID:" + user.getIdUser());
-			System.out.println("USERNAME:" + user.getUsername());
-			System.out.println("PASSWORD:" + user.getPassword());
-			System.out.println("MATBR:" + user.getMaticniBr());
+		System.out.println("Unesite username: ");
+		
+		String userName = scanner.nextLine();
+		
+		int id = metode.vratiIdPoUsername(userName);
+		
+		List<String> listaBrojevaTelefona = new ArrayList<String>();
+		if(id != 0) {
+			listaBrojevaTelefona = metode.vratiBrojTelefona(id);
+			
+			for (String s : listaBrojevaTelefona) {
+				System.out.println(s);
+			}
 		}else {
-			System.out.println("Ne postoji taj user!");
-
-		}*/
-
-		List<User> listaUsera = metode.vratiSveUsere();
+			System.out.println("Nepostojeci user!");
+		}
 		
-		for(User u : listaUsera) {
-			System.out.println("ID:" + u.getIdUser());
-			System.out.println("USERNAME:" + u.getUsername());
-			System.out.println("PASSWORD:" + u.getPassword());
-			System.out.println("MATBR:" + u.getMaticniBr());
+		
+		
+			
 		}
 
 		}
+
 		
-	}
+		
+	
 
